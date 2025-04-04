@@ -11,7 +11,6 @@ const App: React.FC = () => {
   const progressBarRef = useRef<HTMLDivElement | null>(null);
   const countRef = useRef<HTMLParagraphElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const titleLinesRef = useRef<(HTMLParagraphElement | null)[]>([]);
   const logoRef = useRef<HTMLDivElement | null>(null); // New ref for the logo
 
   useEffect(() => {
@@ -21,9 +20,6 @@ const App: React.FC = () => {
     gsap.set(countRef.current, { opacity: 1 });
     gsap.set(logoRef.current, { opacity: 1 }); // Set initial opacity for the logo
     gsap.set(contentRef.current, { width: "0%" });
-    titleLinesRef.current.forEach((line) => {
-      if (line) gsap.set(line, { opacity: 0, display: "none" });
-    });
 
     const count = setInterval(() => {
       setCounter((prevCounter) => {
@@ -57,15 +53,7 @@ const App: React.FC = () => {
       })
       .to(contentRef.current, {
         width: "100%",
-        ease: "expo.inOut",
-        duration: 0.7,
-      })
-      .set(titleLinesRef.current, { display: "block" })
-      .to(titleLinesRef.current, {
-        opacity: 1,
-        stagger: 0.15,
-        ease: "expo.inOut",
-        duration: 0.6,
+        duration: 0.1,
       });
   };
 
@@ -78,7 +66,7 @@ const App: React.FC = () => {
         countRef={countRef}
         logoRef={logoRef} // Pass the logoRef
       />
-      <Content contentRef={contentRef} titleLinesRef={titleLinesRef} />
+      <Content contentRef={contentRef} />
     </div>
   );
 };
